@@ -8,22 +8,23 @@ From CovidDeaths
 Order by location, date
 
 
--- Total cases vs Total Deaths
--- Death percentage of Total case
+-- Total cases vs Total Deaths, Death percentage of Total case
 Select location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
 From [Data Analyst Portfolio Project]..CovidDeaths
-Where continent is not null and location like '%states'
+--Where continent is not null and location like '%states'
 Order by location, date
 
 
--- Total cases vs Population
--- Population percentage got Covid
-Select location, date, population, total_cases, (total_cases/population)*100 as PercentPopulationInfected
+-- Tableau 4
+-- Show Countries with Highest Infection Rate compared to Population
+Select location, date, population, Max(total_cases) as HighestInfectionCount, Max((total_cases/population))*100 as PercentPopulationInfected
 From [Data Analyst Portfolio Project]..CovidDeaths
-Where continent is not null
-Order by location, date
+--Where continent is not null
+Group by location, population, date
+Order by PercentPopulationInfected desc
 
 
+-- Tableau 3
 -- Show Countries with Highest Infection Rate compared to Population
 Select location, population, Max(total_cases) as HighestInfectionCount, Max((total_cases/population))*100 as PercentPopulationInfected
 From [Data Analyst Portfolio Project]..CovidDeaths
@@ -39,7 +40,7 @@ Where continent is not null
 Group by location
 Order by TotalDeathCount desc
 
-
+-- Tableau 2
 -- Show Continent with Highest Death Count per Population
 Select continent, Max(cast(total_deaths as int)) as TotalDeathCount
 From [Data Analyst Portfolio Project]..CovidDeaths
@@ -47,7 +48,7 @@ Where continent is not null
 Group by continent
 Order by TotalDeathCount desc
 
-
+-- Tableau 1
 -- Global Number
 Select Sum(new_cases) as total_cases, Sum(cast(new_deaths as int)) as total_deaths, Sum(cast(new_deaths as int))/Sum(new_cases)*100 as DeathPercentage
 From [Data Analyst Portfolio Project]..CovidDeaths
@@ -89,6 +90,7 @@ From #PercentPopulationVaccinated
 
 --Create View to store data for later visualizations
 
+--Drop View if exists PercentPopulationVaccinated
 Create View PercentPopulationVaccinated as
 Select dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, 
 	Sum(Convert(bigint, vac.new_vaccinations)) Over (Partition by dea.location Order by dea.location, dea.date) as RollingPeopleVaccinated
