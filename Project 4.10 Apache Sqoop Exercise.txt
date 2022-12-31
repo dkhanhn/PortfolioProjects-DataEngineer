@@ -1,3 +1,7 @@
+Name: Khanh Nguyen
+Date: 5/25/2022
+Project 4.10 Apache Sqoop
+
 'DESCRIPTION
 
 Problem Statement: Using SQL and Sqoop commands, perform the below tasks:
