@@ -1,0 +1,206 @@
+Name: Khanh Nguyen
+Date: 5/22/22
+
+
+'PROJECT DESCRIPTION:
+
+'Problem Statement: PV Consulting is one of the top consulting firms for big data projects. They mostly help big and small companies to analyze their data.
+'For Spark and Hadoop MR application, they started using YARN as a resource manager. Your task is to provide the following information for any job which is submitted to YARN using YARN console and YARN Cluster UI:
+
+'Who has submitted the job?
+'To which YARN queue is a job submitted?
+'How much time did it take to finish the job?
+'List of all running jobs on YARN
+'How to kill a job using YARN?
+'Check logs using YARN
+'Objective: To understand how we can monitor the submitted job on Yarn.
+
+
+
+
+
+
+'1. Who has submitted the job
+
+[duyenkhanh1695yahoo@ip-10-0-42-218 ~]$ yarn application -list -appStates SUBMITTED
+WARNING: YARN_OPTS has been replaced by HADOOP_OPTS. Using value of YARN_OPTS.
+22/07/04 22:04:02 INFO client.ConfiguredRMFailoverProxyProvider: Failing over to rm81
+Total number of applications (application-types: [], states: [SUBMITTED] and tags: []):0
+                Application-Id      Application-Name        Application-Type          User           Queue                   State             Final-State             Progress                        Tracking-URL
+											  
+											  
+
+'2. To which yarn queue is a job submitted?
+[duyenkhanh1695yahoo@ip-10-0-31-5 ~]$ yarn queue -status root.users.abhisekdtcs
+WARNING: YARN_OPTS has been replaced by HADOOP_OPTS. Using value of YARN_OPTS.
+22/05/22 18:41:53 INFO client.ConfiguredRMFailoverProxyProvider: Failing over to rm81
+Queue Information : 
+Queue Name : root.users.abhisekdtcs
+        State : RUNNING
+        Capacity : 33.3%
+        Current Capacity : 1.8%
+        Maximum Capacity : -100.0%
+        Default Node Label expression : <DEFAULT_PARTITION>
+        Accessible Node Labels : 	
+
+'3. How much time did it take to finish the job?
+[duyenkhanh1695yahoo@ip-10-0-31-5 ~]$ yarn application -status application_1640258093152_66946
+WARNING: YARN_OPTS has been replaced by HADOOP_OPTS. Using value of YARN_OPTS.
+22/05/22 18:44:37 INFO client.ConfiguredRMFailoverProxyProvider: Failing over to rm81
+22/05/22 18:44:37 INFO conf.Configuration: resource-types.xml not found
+22/05/22 18:44:37 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+Application Report : 
+        Application-Id : application_1640258093152_66946
+        Application-Name : SparkByExamples.com
+        Application-Type : SPARK
+        User : sanjeevnellaigmail
+        Queue : root.users.sanjeevnellaigmail
+        Application Priority : 0
+        Start-Time : 1653152428015
+        Finish-Time : 1653152469030
+        Progress : 100%
+        State : FINISHED
+        Final-State : SUCCEEDED
+        Tracking-URL : N/A
+        RPC Port : -1
+        AM Host : 10.0.31.45
+        Aggregate Resource Allocation : 240970 MB-seconds, 115 vcore-seconds
+        Aggregate Resource Preempted : 0 MB-seconds, 0 vcore-seconds
+        Log Aggregation Status : SUCCEEDED
+        Diagnostics : 
+        Unmanaged Application : false
+        Application Node Label Expression : <Not set>
+        AM container Node Label Expression : <DEFAULT_PARTITION>
+        TimeoutType : LIFETIME  ExpiryTime : UNLIMITED  RemainingTime : -1seconds	
+
+'4. List all of the running jobs on YARN
+[duyenkhanh1695yahoo@ip-10-0-31-5 ~]$ yarn application -list -appStates RUNNING
+WARNING: YARN_OPTS has been replaced by HADOOP_OPTS. Using value of YARN_OPTS.
+22/05/22 18:51:04 INFO client.ConfiguredRMFailoverProxyProvider: Failing over to rm81
+Total number of applications (application-types: [], states: [RUNNING] and tags: []):6
+                Application-Id      Application-Name        Application-Type          User           Queue                   State             Final-State             Progress                        Tracking-URL
+application_1640258093152_67396          Spark shell                   SPARK    sakthigowtham1332gmail  root.users.sakthigowtham1332gmail                  RUNNING               UNDEFINED                  10% http://ip-10-0-21-22.e
+c2.internal:18088/history/application_1640258093152_67396/1
+application_1640258093152_67424          Spark shell                   SPARK    abhisekdtcs     root.users.abhisekdtcs             RUNNING               UNDEFINED                  10% http://ip-10-0-21-22.ec2.internal:18088/histor
+y/application_1640258093152_67424/1
+application_1640258093152_67449          Spark shell                   SPARK    abhisekdtcs     root.users.abhisekdtcs             RUNNING               UNDEFINED                  10% http://ip-10-0-21-22.ec2.internal:18088/histor
+y/application_1640258093152_67449/1
+application_1640258093152_67389          Spark shell                   SPARK    vijayalbertmtcs root.users.vijayalbertmtcs                 RUNNING               UNDEFINED                  10% http://ip-10-0-21-22.ec2.internal:1808
+8/history/application_1640258093152_67389/1
+application_1640258093152_67385          Spark shell                   SPARK    sakthigowtham1332gmail  root.users.sakthigowtham1332gmail                  RUNNING               UNDEFINED                  10% http://ip-10-0-21-22.e
+c2.internal:18088/history/application_1640258093152_67385/1
+application_1640258093152_67551          Spark shell                   SPARK    abhisekdtcs     root.users.abhisekdtcs             RUNNING               UNDEFINED                  10% http://ip-10-0-21-22.ec2.internal:18088/histor
+y/application_1640258093152_67551/1
+
+
+'5. How to kill a a job using YARN
+[duyenkhanh1695yahoo@ip-10-0-31-5 ~]$ yarn application -kill application_1640258093152_67551
+WARNING: YARN_OPTS has been replaced by HADOOP_OPTS. Using value of YARN_OPTS.
+22/05/22 18:52:58 INFO client.ConfiguredRMFailoverProxyProvider: Failing over to rm81
+Killing application application_1640258093152_67551
+22/05/22 18:52:59 INFO impl.YarnClientImpl: Killed application application_1640258093152_67551
+
+'6. Check logs using YARN
+[duyenkhanh1695yahoo@ip-10-0-31-5 ~]$ yarn logs
+WARNING: YARN_OPTS has been replaced by HADOOP_OPTS. Using value of YARN_OPTS.
+Retrieve logs for YARN applications.
+usage: yarn logs -applicationId <application ID> [OPTIONS]
+
+general options are:
+ -am <AM Containers>                          Prints the AM Container logs
+                                              for this application.
+                                              Specify comma-separated
+                                              value to get logs for
+                                              related AM Container. For
+                                              example, If we specify -am
+                                              1,2, we will get the logs
+                                              for the first AM Container
+                                              as well as the second AM
+                                              Container. To get logs for
+                                              all AM Containers, use -am
+                                              ALL. To get logs for the
+                                              latest AM Container, use -am
+                                              -1. By default, it will
+                                              print all available logs.
+                                              Work with -log_files to get
+                                              only specific logs.
+ -appOwner <Application Owner>                AppOwner (assumed to be
+                                              current user if not
+                                              specified)
+ -client_max_retries <Max Retries>            Set max retry number for a
+                                              retry client to get the
+                                              container logs for the
+                                              running applications. Use a
+                                              negative value to make retry
+                                              forever. The default value
+                                              is 30.
+ -client_retry_interval_ms <Retry Interval>   Work with
+                                              --client_max_retries to
+                                              create a retry client. The
+                                              default value is 1000.
+ -containerId <Container ID>                  ContainerId. By default, it
+                                              will print all available
+                                              logs. Work with -log_files
+                                              to get only specific logs.
+                                              If specified, the
+                                              applicationId can be omitted
+ -help                                        Displays help for all
+                                              commands.
+ -list_nodes                                  Show the list of nodes that
+                                              successfully aggregated
+                                              logs. This option can only
+                                              be used with finished
+                                              applications.
+ -log_files <Log File Name>                   Specify comma-separated
+                                              value to get exact matched
+                                              log files. Use "ALL" or "*"
+                                              to fetch all the log files
+                                              for the container.
+ -log_files_pattern <Log File Pattern>        Specify comma-separated
+                                              value to get matched log
+                                              files by using java regex.
+                                              Use ".*" to fetch all the
+                                              log files for the container.
+ -nodeAddress <Node Address>                  NodeAddress in the format
+                                              nodename:port
+ -out <Local Directory>                       Local directory for storing
+                                              individual container logs.
+                                              The container logs will be
+                                              stored based on the node the
+                                              container ran on.
+ -show_application_log_info                   Show the containerIds which
+                                              belong to the specific
+                                              Application. You can combine
+                                              this with --nodeAddress to
+                                              get containerIds for all the
+                                              containers on the specific
+                                              NodeManager.
+ -show_container_log_info                     Show the container log
+                                              metadata, including log-file
+                                              names, the size of the log
+                                              files. You can combine this
+                                              with --containerId to get
+                                              log metadata for the
+                                              specific container, or with
+                                              --nodeAddress to get log
+                                              metadata for all the
+                                              containers on the specific
+                                              NodeManager.
+ -size <size>                                 Prints the log file's first
+                                              'n' bytes or the last 'n'
+                                              bytes. Use negative values
+                                              as bytes to read from the
+                                              end and positive values as
+                                              bytes to read from the
+                                              beginning.
+ -size_limit_mb <Size Limit>                  Use this option to limit the
+                                              size of the total logs which
+                                              could be fetched. By
+                                              default, we only allow to
+                                              fetch at most 10240 MB logs.
+                                              If the total log size is
+                                              larger than the specified
+                                              number, the CLI would fail.
+                                              The user could specify -1 to
+                                              ignore the size limit and
+                                              fetch all logs.
