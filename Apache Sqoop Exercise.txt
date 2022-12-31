@@ -1,0 +1,59 @@
+'DESCRIPTION
+
+Problem Statement: Using SQL and Sqoop commands, perform the below tasks:
+
+Create a database
+Create a table “employee” with the following fields: Id, Name, Salary,
+Department, and Designation
+Id is the primary key for the table
+Insert at least 5 records into the table
+Import the database and table into Sqoop
+Import only the records for which Salary is greater than 50000
+Steps to Perform:
+
+MySQL
+mysql -u labuser -p
+
+Password : simplilearn
+CREATE DATABASE userdb;
+use userdb;
+create table employee(Id INT NOT NULL, Name VARCHAR(100) NOT
+NULL, Salary INT NOT NULL,
+Department VARCHAR(100) NOT NULL, Designation VARCHAR(100) NOT NULL, PRIMARY KEY(Id));
+insert into employee values(201,"Peter",50000,"It","Developer");
+insert into employee values(202,"Alice",60000,"Sales","Manager");
+insert into employee values(203,"Jack",70000,"Operations","Director");
+insert into employee values(205,"John",70000,"Support","Director");
+
+Sqoop
+sqoop import --connect jdbc:mysql://ip-10-0-1-10.ec2.internal/userdb -- username labuser --password simplilearn --table employee –target - dir /user/simpli_learn/simpli --m 1
+sqoop list-tables --connect jdbc:mysql://ip-10-0-1-10.ec2.internal/userdb --username labuser --password simplilearn
+sqoop import --connect jdbc:mysql://ip-10-0-1-10.ec2.internal/userdb username labuser --password simplilearn --table employee -m 1 -- where "Salary > 50000" --target-dir '/user/simpli_learn/simpli123 -m 1
+
+
+
+Answer:
+sqoop import --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo -- username duyenkhanh1695yahooo --password duyenkhanh1695yahoow27yo --table employee --m 1
+sqoop list-tables --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo --username duyenkhanh1695yahooo --password duyenkhanh1695yahoow27yo
+sqoop import --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo -- username duyenkhanh1695yahooo --password duyenkhanh1695yahoow27yo --table employee --m 1 --where "Salary > 50000" --target-dir duyenkhanh1695yahoo/employee2
+
+
+
+sqoop import --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo --username duyenkhanh1695yahoo --password duyenkhanh1695yahoow27yo --table simpli346 --target-dir batch346/sqoop-jobs/job2 --columns "name" -m 1
+
+sqoop import --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo --username duyenkhanh1695yahoo --password duyenkhanh1695yahoow27yo --table simpli346 --target-dir batch346/sqoop-jobs/job4 --where "id > 102" -m 1
+
+-store file as avfro format
+sqoop import --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo --username duyenkhanh1695yahoo --password duyenkhanh1695yahoow27yo --table simpli346 --target-dir batch346/sqoop-jobs/job5 --as-avrodatafile -m 1
+
+-store file as parquet format
+sqoop import --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo --username duyenkhanh1695yahoo --password duyenkhanh1695yahoow27yo --table simpli346 --target-dir batch346/sqoop-jobs/job6 --as-parquetfile -m 1
+
+
+sqoop list-databases --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com -username duyenkhanh1695yahoo -P
+
+sqoop list-tables --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo -username duyenkhanh1695yahoo -P
+
+
+-export
+--sqoop export --connect jdbc:mysql://sqoopdb.slbdh.cloudlabs.com/duyenkhanh1695yahoo --username duyenkhanh1695yahoo --password duyenkhanh1695yahoow27yo --table export346 --export-dir batch346/sqoop-jobs/job1/part* -m 1
